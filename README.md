@@ -93,3 +93,61 @@ Frontend runs on: http://localhost:3000
 
 **Access Dashboard**
 Open http://localhost:3000 in your browser
+
+**🔧 API Endpoints**
+**Threat Intelligence**
+
+    GET /api/threat-intel - Get threat intelligence feed
+
+    GET /api/stats - Get threat statistics
+
+    GET /api/check-ip/<ip> - Check specific IP reputation
+
+**Log Analysis**
+
+    POST /api/upload-logs - Upload and analyze log files
+
+    GET /api/search - Search threats
+
+**System**
+
+    GET /api/health - System health check
+
+🎯 **Usage Examples**
+**1. Monitoring Threat Feed**
+
+    Navigate to "Threat Feed" tab
+
+    Filter by severity (Critical, High, Medium, Low)
+
+    Search specific IPs or countries
+
+    View detailed threat information
+
+**2. Analyzing Log Files**
+
+    Go to "Log Analysis" tab
+
+    Upload server logs (Apache, Nginx, etc.)
+
+    Review automatic threat matches
+
+    Download security report
+
+**3. Investigating Specific IPs**
+
+    Use IP check feature in Threat Feed
+
+    Get combined intelligence from Shodan & AbuseIPDB
+
+    View vulnerability and reputation data
+
+**🔒 Security Features**
+
+    Real-time Threat Intelligence: Live data from trusted sources
+
+    Automated Correlation: Automatic matching of logs with threat data
+
+    Severity Classification: Intelligent threat scoring
+
+    Comprehensive Reporting: Detailed security assessment
