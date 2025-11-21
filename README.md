@@ -2,8 +2,6 @@
 
 A comprehensive security dashboard that aggregates threat intelligence from **Shodan** and **AbuseIPDB**, with log analysis capabilities for security monitoring and threat detection.
 
-![Dashboard Overview](screenshots/dashboard-overview.png)
-
 ## ✨ Features
 
 ### 🔍 **Threat Intelligence Aggregation**
@@ -58,3 +56,40 @@ A comprehensive security dashboard that aggregates threat intelligence from **Sh
    ```bash
    git clone <repository-url>
    cd security-dashboard
+
+2. **Backend Setup**
+bash
+
+cd backend
+python -m venv venv
+venv\Scripts\activate  # Windows
+# source venv/bin/activate  # Linux/Mac
+pip install -r requirements.txt
+
+3. **Configure API Keys**
+bash
+
+# Create .env file in backend directory
+echo "SHODAN_API_KEY=your_shodan_key_here" > .env
+echo "ABUSEIPDB_API_KEY=your_abuseipdb_key_here" >> .env
+
+4. **Frontend Setup**
+bash
+
+cd frontend
+npm install
+
+**Running the Application**
+    **Start Backend** (Terminal 1)
+    cd backend
+    python app.py
+Backend runs on: http://localhost:5000
+
+   **Start Frontend (Terminal 2)**
+   cd frontend
+   npm start
+
+Frontend runs on: http://localhost:3000
+
+**Access Dashboard**
+Open http://localhost:3000 in your browser
