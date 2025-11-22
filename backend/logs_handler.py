@@ -89,7 +89,7 @@ class LogsHandler:
                         }
                     })
                 
-                # Optional: Check with Shodan for additional context
+                # Check with Shodan for additional context
                 if shodan_client:
                     shodan_result = shodan_client.get_host_info(ip)
                     if shodan_result and shodan_result.get('vulnerabilities'):
@@ -97,7 +97,7 @@ class LogsHandler:
                             'log_entry': entry,
                             'ip_address': ip,
                             'threat_data': shodan_result,
-                            'confidence_score': 80,  # Default for vulnerable services
+                            'confidence_score': 80,
                             'severity': 'high',
                             'source': 'shodan',
                             'details': {
@@ -108,52 +108,3 @@ class LogsHandler:
                         })
         
         return threat_matches
-    
-    def generate_security_report(self, log_entries, threat_matches):
-        """Generate a comprehensive security report"""
-        report = {
-            'summary': {
-                'total_entries': len(log_entries),
-                'unique_ips': len(set(ip for entry in log_entries for ip in entry['ip_addresses'])),
-                'threat_matches': len(threat_matches),
-                'attack_patterns': sum(len(entry.get('attack_patterns', [])) for entry in log_entries)
-            },
-            'threat_breakdown': {
-                'abuseipdb_matches': len([m for m in threat_matches if m['source'] == 'abuseipdb']),
-                'shodan_matches': len([m for m in threat_matches if m['source'] == 'shodan']),
-                'high_severity': len([m for m in threat_matches if m['severity'] == 'high']),
-                'medium_severity': len([m for m in threat_matches if m['severity'] == 'medium'])
-            },
-            'top_threat_ips': [],
-            'recommendations': []
-        }
-        
-        # Get top threat IPs
-        ip_threat_count = {}
-        for match in threat_matches:
-            ip = match['ip_address']
-            ip_threat_count[ip] = ip_threat_count.get(ip, 0) + 1
-        
-        report['top_threat_ips'] = sorted(
-            [{'ip': ip, 'count': count} for ip, count in ip_threat_count.items()],
-            key=lambda x: x['count'],
-            reverse=True
-        )[:10]
-        
-        # Generate recommendations
-        if report['summary']['threat_matches'] > 0:
-            report['recommendations'].append(
-                f"Block {report['summary']['threat_matches']} malicious IPs identified in logs"
-            )
-        
-        if report['threat_breakdown']['high_severity'] > 0:
-            report['recommendations'].append(
-                f"Immediately investigate {report['threat_breakdown']['high_severity']} high-severity threats"
-            )
-        
-        if report['summary']['attack_patterns'] > 0:
-            report['recommendations'].append(
-                f"Review {report['summary']['attack_patterns']} detected attack patterns"
-            )
-        
-        return report
